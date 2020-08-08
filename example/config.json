@@ -1,0 +1,67 @@
+{
+    "bars": [
+        {
+            "name": "main",
+            "size": {
+                "w": "100%",
+                "h": "24",
+                "y": "12",
+                "x": "0"
+            },
+            "monitor": "DVI-D-0",
+            "left": [
+                [ "tray" ],
+                [ "bspwm" ],
+                [ "cpu", "ram", "files", "network" ],
+                [ "xwindow" ]
+            ],
+            "right": [
+                [ "date" ],
+                [ "audio" ],
+                [ "weather" ]
+            ]
+        }
+    ],
+    "fonts": [
+        "DroidSansMono Nerd Font Mono:pixelsize=10;2",
+        "DroidSansMono Nerd Font Mono:pixelsize=18;4"
+    ],
+    "sep": {
+        "left": "%{T2}%{T-}",
+        "right": "%{T2}%{T-}"
+    },
+    "subsep": {
+        "left": "%{T2}%{T-}",
+        "right": "%{T2}%{T-}"
+    },
+    "data": {
+        "bspwm": [
+            "focused",
+            "urgent",
+            "occupied",
+            "empty",
+            "monocle",
+            "tiled",
+            "fullscreen",
+            "floating",
+            "locked",
+            "sticky",
+            "private"
+        ]
+    },
+    "colors": {
+        "foreground": "${xrdb:foreground}",
+        "background": "#00000000",
+        "text": "${xrdb:color0}",
+        "colors": [
+            "${xrdb:color0}",
+            "${xrdb:color1}",
+            "${xrdb:color2}",
+            "${xrdb:color3}",
+            "${xrdb:color4}",
+            "${xrdb:color5}",
+            "${xrdb:color6}",
+            "${xrdb:color7}"
+        ]
+    }
+}
