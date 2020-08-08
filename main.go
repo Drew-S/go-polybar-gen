@@ -39,6 +39,7 @@ type Separator struct {
     Right string `json:"right"`
 }
 
+// Colors information
 type Colors struct {
     Foreground string `json:"foreground"`
     Background string `json:"background"`
@@ -100,6 +101,7 @@ foreground = {{.Colors.Foreground}}
 `
 
 func main() {
+    // Read and unpack the config json file
     var config Config
 
     fmt.Println("Generating Polybar config")
@@ -112,34 +114,49 @@ func main() {
     
     json.Unmarshal(filedata, &config)
 
+    // Open the output config file for writing
     file, err := os.Create("config")
     if err != nil {
         fmt.Printf("An error occurred: %s\n", err)
     }
     defer file.Close()
 
+    // Compile preamble template string
     t := template.Must(template.New("preamble").Funcs(template.FuncMap{
         "inc": func(i int) int {
             return i + 1
         },
     }).Parse(preambleTemplate))
 
+    // Get global wm config
+    var g string
+
+    globalData, err := ioutil.ReadFile("global.ini")
+    if err != nil {
+        fmt.Println("Error reading global.ini, omitting")
+    } else {
+        g = string(globalData)
+    }
+
+    // Write the preamble
     t.Execute(file, struct{
         Global string
         Colors Colors
     }{
-        "[global/wm]\nmargin-bottom = -12",
+        g,
         config.Colors,
     })
 
     file.WriteString(BARSEPARATOR)
 
+    // Generate fonts string
     var fonts string
 
     for i, f := range config.Fonts {
         fonts += fmt.Sprintf("font-%d = \"%s\"\n", i, f)
     }
 
+    // Generate each bar
     for i, b := range config.Bars {
         parseBar(b, fonts, file)
         if i != len(config.Bars) - 1 {
@@ -149,8 +166,10 @@ func main() {
 
     file.WriteString(MODSEPARATOR)
 
+    // Generate separators
     generateSeparators(config, file)
 
+    // Generate each module
     for _, b := range config.Bars {
         for i, set := range b.Left {
             for _, mod := range set {

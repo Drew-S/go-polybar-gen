@@ -7,6 +7,7 @@ import (
     "text/template"
 )
 
+// Data for writing to template
 type BarTemplate struct {
     Name string
     Size string
@@ -15,6 +16,11 @@ type BarTemplate struct {
     Fonts string
 }
 
+/*
+    Parse each of the modules to attach depth numbers and fill in the separators.
+    e.g.:
+    "left": [ [ "a" ], [ "b", "c" ], [ "d" ] ] -> a1 sl1 b2 ssl2 c2 sl2 d3 sl3b
+*/
 func parseModuleList(b Bar) (string, int) {
     var out string
     var tray int = 2
@@ -74,6 +80,7 @@ func parseModuleList(b Bar) (string, int) {
     return out, tray
 }
 
+// Parse a bar and generate the module pattern
 func parseBar(b Bar, f string, file *os.File) {
     t := template.Must(template.ParseFiles("bar.ini"))
 

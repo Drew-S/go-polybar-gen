@@ -86,6 +86,8 @@ content-foreground = {{color $i 2}}
 
 `
 
+// Generates all the different separators for the config, (major left/right,
+// minor left/right, and straight to background varients)
 func generateSeparators(config Config, file *os.File) {
     t := template.Must(template.New("separators").Funcs(template.FuncMap{
         "add": func(i int, a int) int {

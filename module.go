@@ -10,6 +10,7 @@ import (
 
 var mods map[string][]int = make(map[string][]int)
 
+// Parse each mod filling out color data and depth naming
 func parseMod(mod string, depth int, config Config, file *os.File) bool {
     if mod == "tray" {
         return false
