@@ -6,6 +6,7 @@ import (
     "os"
     "encoding/json"
     "text/template"
+    "math"
 )
 
 /*
@@ -37,6 +38,7 @@ type Bar struct {
 type Separator struct {
     Left string `json:"left"`
     Right string `json:"right"`
+    Center string `json:"center"`
 }
 
 // Colors information
@@ -179,6 +181,72 @@ func main() {
                 file.WriteString("\n" + SEPARATOR)
             }
         }
+        var mid int = int(math.Floor(float64(len(b.Center)) / 2.0))
+        if len(b.Center) % 2 == 0 {
+            for i := 0; i < mid; i++ {
+                for _, mod := range b.Center[i] {
+                    if !parseMod(mod, mid - i, config, file) {
+                        continue
+                    }
+                    file.WriteString("\n" + SEPARATOR)
+                }
+            }
+            for i := 0; i < mid; i++ {
+                for _, mod := range b.Center[mid + i] {
+                    if !parseMod(mod, i + 1, config, file) {
+                        continue
+                    }
+                    file.WriteString("\n" + SEPARATOR)
+                }
+            }
+        } else {
+            for i := 0; i < mid; i++ {
+                for _, mod := range b.Center[i] {
+                    if !parseMod(mod, mid + 1, config, file) {
+                        continue
+                    }
+                    file.WriteString("\n" + SEPARATOR)
+                }
+            }
+            for _, mod := range b.Center[mid] {
+                if !parseMod(mod, 1, config, file) {
+                    continue
+                }
+                file.WriteString("\n" + SEPARATOR)
+            }
+            for i := 0; i < mid; i++ {
+                for _, mod := range b.Center[mid + i + 1] {
+                    if !parseMod(mod, i + 2, config, file) {
+                        continue
+                    }
+                    file.WriteString("\n" + SEPARATOR)
+                }
+            }
+        }
+        //for i := 0; i < mid; i++ {
+            //for _, mod := range b.Center[i] {
+                //if !parseMod(mod, mid - i + 1, config, file) {
+                    //continue
+                //}
+                //file.WriteString("\n" + SEPARATOR)
+            //}
+        //}
+        //if len(b.Center) % 2 == 1 {
+            //for _, mod := range b.Center[mid] {
+                //if !parseMod(mod, 1, config, file) {
+                    //continue
+                //}
+                //file.WriteString("\n" + SEPARATOR)
+            //}
+        //}
+        //for i := 0; i < mid; i++ {
+            //for _, mod := range b.Center[i + mid] {
+                //if !parseMod(mod, i + 1, config, file) {
+                    //continue
+                //}
+                //file.WriteString("\n" + SEPARATOR)
+            //}
+        //}
         for i, set := range b.Right {
             for _, mod := range set {
                 if !parseMod(mod, i+1, config, file) {

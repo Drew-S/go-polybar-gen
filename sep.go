@@ -26,6 +26,14 @@ content = {{.Subsep.Right}}
 type = custom/text
 content = {{.Subsep.Left}}
 
+;=======================================================MID
+
+[module/ssm1]
+type = custom/text
+content = {{.Sep.Center}}
+content-background = ${colors.color2}
+content-foreground = ${colors.color1}
+
 ;======================================================LEFT
 {{range $i, $el := colors .Colors.Colors}}
 [module/sl{{add $i 1}}]
